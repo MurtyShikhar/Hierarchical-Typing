@@ -134,7 +134,7 @@ class TypingDataset(object):
 
         self.line_transformer = line_transformer
         self.train = train
-        self.encoder_type = encoder_type        
+        self.encoder_type = encoder_type
 
 
     def shuffle(self):
@@ -326,8 +326,8 @@ def get_candidates(sfm_mention, entity_dict, gold_entity, crosswikis, train, hie
     gold_ids |= ancestors
 
     if train:
-        # take the top 200 - len(gold_ids) and add to it the gold entity at train time
-        crosswiki_data = [ (entity_dict[ent], prob) for (ent, prob) in candidate_probab_list if  ent in entity_dict and entity_dict[ent] not in gold_ids][:200]
+        # take the top 100 - len(gold_ids) and add to it the gold entity at train time
+        crosswiki_data = [ (entity_dict[ent], prob) for (ent, prob) in candidate_probab_list if  ent in entity_dict and entity_dict[ent] not in gold_ids][:100]
 
         neg_cands = len(crosswiki_data)
         ent_gold_prob = {_id : 0.0 for _id in gold_ids}
@@ -348,7 +348,7 @@ def get_candidates(sfm_mention, entity_dict, gold_entity, crosswikis, train, hie
 
     else:
         # take the top 100 entities and hope that the gold is somewhere in this
-        crosswiki_data = [ [entity_dict[ent], prob] for (ent, prob) in candidate_probab_list if ent in entity_dict][:200]
+        crosswiki_data = [ [entity_dict[ent], prob] for (ent, prob) in candidate_probab_list if ent in entity_dict][:100]
         if (len(crosswiki_data) != 0):
             candidates, priors = zip(*crosswiki_data)
         else:
@@ -596,7 +596,7 @@ def MILtransformer(all_mentions, vocab_dict, entity_dict, cross_wikis, embedding
         gold_ent     = gold_ent[7:-4]
         gold_mention = " ".join(gold_mention[9:].split("_"))
         sentence, sfm_mention, position_embedding, st_id, en_id = process(vocab_dict, curr_sentence, flag_wiki=True, encoder = encoder_type)
-        
+
         all_candidates, priors, gold_id = get_candidates(getLnrm(gold_mention, pattern), entity_dict, gold_ent, cross_wikis, train)
 
         mention_representation = np.array([embeddings[_id] for _id in sfm_mention]).mean(axis = 0)
