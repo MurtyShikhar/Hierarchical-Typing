@@ -47,16 +47,7 @@ class Config:
         self.crosswikis_file = "/iesl/canvas/nmonath/data/crosswikis/dictionary.bz2"
         self.redirects_file = "/iesl/canvas/smurty/wiki-data/enwiki-20160920-redirect.tsv"
 
-
-        if self.dataset == "ACE":
-            #== Files with the train/dev/test split for ACE
-            self.train_file="%s/ACE_linking/train_processed"%base_dir
-            self.dev_file="%s/ACE_linking/dev_processed"%base_dir
-            self.test_file="%s/ACE_linking/test_processed"%base_dir
-            self.entity_file="%s/ACE_linking/entities.joblib"%base_dir
-            self.raw_entity_file = "%s/ACE_linking/ACE_entity_file.txt"%base_dir
-
-        elif self.dataset == "figer":
+        if self.dataset == "figer":
             self.train_file="%s/wiki_typing/wiki_train_types"%base_dir
             self.dev_file="%s/wiki_typing/dev"%base_dir
             self.test_file="%s/wiki_typing/test"%base_dir
@@ -107,47 +98,4 @@ class Config:
         self.checkpoint_file = "%s/checkpoints_figer_final" %run_dir
         self.model_file = args.model_name
 
-class Config_Segmenter:
-    gpu = True
 
-    def __init__(self, run_dir, args):
-        self.dataset       = args.dataset
-        self.model_name    = args.model_name
-        self.dropout       = args.dropout
-        self.train         = args.train
-        self.lr            = args.lr
-        self.beta1         = args.beta2
-        self.beta2         = args.beta1
-        self.epsilon       = args.epsilon
-        self.weight_decay  = args.weight_decay
-        self.save_model    = args.save_model
-        self.clip_val      = args.clip_val
-        self.embedding_dim = args.embedding_dim
-        self.hidden_dim    = args.hidden_dim
-        self.num_epochs    = args.num_epochs
-        self.batch_size    = args.batch_size
-        self.take_frac     = args.take_frac
-
-        self.base_dir      = args.base_dir
-        self.char_level    = args.char_level
-        self.char_dim      = args.char_dim
-        self.char_hidden_dim = args.char_hidden_dim
-        self.segmenter     = args.segmenter
-
-        base_dir           = args.base_dir
-
-        self.embedding_file = "%s/data/pretrained_embeddings.npz" %base_dir
-        self.embedding_downloaded_file = "%s/other_resources/glove.840B.300d.txt" %base_dir
-
-        self.vocab_file="%s/data/vocab.joblib"%base_dir
-        self.checkpoint_file = "%s/checkpoints" %run_dir
-        self.model_file = args.model_name
-
-        if self.dataset == 'wiki':
-            self.train_file = "/iesl/canvas/smurty/epiKB/segmenter_data/train_sampled.joblib"
-            self.dev_file   = "/iesl/canvas/smurty/epiKB/segmenter_data/dev_sampled.joblib"
-            self.test_file  = "/iesl/canvas/smurty/epiKB/segmenter_data/test_sampled.joblib"
-        else:
-            self.train_file = "/iesl/canvas/smurty/epiKB/segmenter_data/AIDA_train.joblib"
-            self.dev_file   = "/iesl/canvas/smurty/epiKB/segmenter_data/AIDA_dev.joblib"
-            self.test_file  = "/iesl/canvas/smurty/epiKB/segmenter_data/AIDA_test.joblib"
