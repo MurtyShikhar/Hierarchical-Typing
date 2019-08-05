@@ -321,9 +321,6 @@ def get_candidates(sfm_mention, entity_dict, gold_entity, crosswikis, train, hie
     gold_id = entity_dict[gold_entity]
 
     gold_ids = set([gold_id])
-    ancestors = hierarchy[gold_id] if gold_id in hierarchy else set()
-
-    gold_ids |= ancestors
 
     if train:
         # take the top 100 - len(gold_ids) and add to it the gold entity at train time
